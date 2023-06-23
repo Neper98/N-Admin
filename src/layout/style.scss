@@ -1,0 +1,117 @@
+.container {
+  min-height: 100vh;
+
+  .title-name {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .logo {
+    height: 35px;
+    width: 35px;
+    margin-right: 10px;
+  }
+  .container__header {
+    background-color: var(--el-color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .container_header--left {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .container__header--right {
+      display: flex;
+      align-items: center;
+      color: #fff;
+      .icon-fullScreen {
+        cursor: pointer;
+        margin-right: 20px;
+
+        &:hover {
+          transform: scale(1.1);
+          transition: 0.3s;
+        }
+      }
+      .avatar {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .container__side {
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    border-right: 1px solid #e6e6e6;
+    transition: width 0.3s;
+  }
+
+  :deep(.el-menu) {
+    border: none !important;
+  }
+
+  :deep(.el-main) {
+    padding: 0;
+  }
+
+  .collapse {
+    width: 65px;
+  }
+
+  .container_main {
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f8f9;
+  }
+
+  .contaier__content {
+    overflow: auto;
+    background-color: #ffffff;
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  :deep(.el-drawer__body) {
+    padding: 0;
+  }
+
+  .icon-menu {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    background: #409eff;
+    color: #fff;
+    box-shadow: 0 2px 12px 0 rgba(64, 158, 255, 1);
+    border-radius: 50%;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.3s;
+    }
+  }
+
+ 
+  .side--mobile {
+    min-height: 100vh;
+    background-color: #212d3d;
+
+    .side__header--mobile {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px dotted #f4f5f529;
+    }
+  }
+}
