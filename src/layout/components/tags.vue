@@ -13,12 +13,9 @@
           :key="tag.fullPath"
           @contextmenu.prevent="openMenu($event, tag)"
         >
-          <span>{{ tag.meta.title }}</span>
-          <i-ep-close
-            class="icon-close"
-            v-if="!tag.meta.affix"
-            @click.prevent.stop="closeTag(tag)"
-          />
+        <el-tag :closable="!tag.meta.affix" @close.prevent="closeTag(tag)" :effect="isActive(tag) ? 'dark' : 'plain'">
+          {{ tag.meta.title }}
+        </el-tag>
         </router-link>
       </div>
     </el-scrollbar>
@@ -53,7 +50,7 @@
 import Sortable from 'sortablejs'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useGlobalStore } from '@/stores/global'
+import { useGlobalStore } from '@/stores'
 import type { RouteLocationNormalizedLoaded as RN } from 'vue-router'
 import { type DropdownInstance, ElScrollbar } from 'element-plus'
 import { fullScreen } from '@/utils'
@@ -87,7 +84,7 @@ onMounted(() => {
 })
 const isActive = (r: RN) => r.fullPath === route.fullPath
 // 右键打开菜单
-const openMenu = (e, tag: RN) => {
+const openMenu = (e: MouseEvent , tag: RN) => {
   const { clientX: x, clientY: y } = e
   currentTag.value = tag
   menuOptions.position = {
@@ -139,7 +136,6 @@ const fullScreenTag = (tag: RN) => {
     align-items: center;
     line-height: 35px;
     font-size: 12px;
-    border-right: 1px solid #e6e6e6;
     flex-shrink: 0;
 
     &:hover {
@@ -147,19 +143,12 @@ const fullScreenTag = (tag: RN) => {
     }
   }
 
-  .active {
-    color: #fff;
-    background-color: var(--el-color-primary) !important;
-  }
+  // .active {
+  //   color: #fff;
+  //   background-color: var(--el-color-primary) !important;
+  // }
 
-  .icon-close {
-    margin-left: 10px;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.2);
-      color: #fff;
-    }
-  }
+ 
 }
 .menu {
   :deep(.menu-list){

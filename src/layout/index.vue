@@ -58,9 +58,9 @@
       <!-- 主体部分 -->
       <el-main class="container_main">
         <!-- 面包屑 -->
-        <topbar v-if="!isMobile" />
+        <top-bar v-if="!isMobile" />
         <!-- 多标签 -->
-        <Tags v-if="!isMobile" :contentRef="contentRef" />
+        <tags v-if="!isMobile" :contentRef="contentRef" />
         <!-- 内容部分 -->
         <div class="contaier__content" ref="contentRef">
           <router-view v-slot="{ Component }">
@@ -76,20 +76,18 @@
 <script lang="ts" setup>
 import NavMenu from './components/nav-menu.vue'
 import Tags from './components/tags.vue'
-import Topbar from './components/topbar.vue'
+import TopBar from './components/top-bar.vue'
 import logo from '@/assets/logo.png'
-import { useGlobalStore } from '@/stores/global'
+import { useGlobalStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { menu } from '@/router'
 import { useRoute } from 'vue-router'
 import { ref, computed } from 'vue'
 import { fullScreen } from '@/utils'
-
 const route = useRoute()
 const contentRef = ref()
 const { isMobile, collapse, viewTags } = storeToRefs(useGlobalStore())
 const visible = ref<boolean>(false)
-console.log(viewTags.value[0])
 
 const keepAliveComponents = computed(
   () =>
@@ -97,7 +95,6 @@ const keepAliveComponents = computed(
       .map((tag) => tag.matched[tag.matched.length - 1].components?.default.name)
       .filter((i) => !!i) as string[],
 )
-console.log(keepAliveComponents.value)
 const toggleDrawer = () => {
   visible.value = !visible.value
 }
@@ -105,7 +102,7 @@ const fs = () => {
   fullScreen(document.documentElement)
 }
 
-const handler = (type) => {
+const handler = (type: any) => {
   console.log(type)
 }
 </script>

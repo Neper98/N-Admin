@@ -8,7 +8,7 @@ import menu21 from '@/views/menu2/menu21/index.vue'
 import menu22 from '@/views/menu2/menu22/index.vue'
 import home from '@/views/home/index.vue'
 import layout from '@/layout/index.vue'
-import { useGlobalStore } from '@/stores/global'
+import { useGlobalStore } from '@/stores'
 import { Delete} from '@element-plus/icons-vue'
 
 export const menu = [

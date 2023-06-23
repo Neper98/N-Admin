@@ -1,6 +1,9 @@
 <template>
   <div class="topbar">
-    <i-ep-Fold class="topbar__icon--collapse" @click="toggleCollapse" />
+    <div class="topbar__icon--collapse" :class="{ collapse }" @click="toggleCollapse">
+      <i-ep-Expand v-if="collapse" />
+      <i-ep-Fold v-else />
+    </div>
     <el-breadcrumb :separator-icon="ArrowRight">
       <transition-group name="breadcrumb" mode="out-in">
         <template v-for="{ meta, path, name } in breadList" :key="path">
@@ -14,17 +17,17 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useGlobalStore } from '@/stores/global'
+import { useGlobalStore } from '@/stores'
 import { ArrowRight } from '@element-plus/icons-vue'
+import { storeToRefs } from 'pinia'
 
 const route = useRoute()
 const breadList = computed(() => route.matched)
-const global = useGlobalStore()
+const { collapse } = storeToRefs(useGlobalStore())
 
 const toggleCollapse = () => {
-  global.collapse = !global.collapse
+  collapse.value = !collapse.value
 }
-console.log(route.matched.map(item => item.components))
 </script>
 
 <style lang="scss" scoped>
@@ -36,8 +39,19 @@ console.log(route.matched.map(item => item.components))
   border-bottom: 1px solid #ebeef5;
 }
 .topbar__icon--collapse {
-  margin: 0 20px;
+  padding: 0 20px;
+  height: 100%;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background-image: linear-gradient(90deg, var(--el-color-primary), transparent);
+  }
+
+  &.collapse:hover {
+    background-image: linear-gradient(-90deg, var(--el-color-primary), transparent);
+  }
 }
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {

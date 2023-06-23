@@ -1,19 +1,17 @@
-
 <template>
-  <div>
-      <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 <script lang="ts" setup>
 import { onMounted, onBeforeUnmount } from 'vue'
-import { useGlobalStore} from '@/stores/global'
+import { useGlobalStore } from '@/stores'
+import { throttle } from 'lodash';
 
 const store = useGlobalStore()
-const resizeFn = () => {
+const resizeFn = throttle(() => {
   store.isMobile = document.body.clientWidth < 992
-}
-resizeFn()
+},500)
 onMounted(() => {
+  resizeFn()
   window.addEventListener('resize', resizeFn)
 })
 onBeforeUnmount(() => {
@@ -21,5 +19,4 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
