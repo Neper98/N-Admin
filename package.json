@@ -11,8 +11,8 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "link:format": "prettier --write src/",
-    "link:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:format": "prettier --write src/",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
     "lint:style": "stylelint --fix \"src/**/*.{css,scss,vue}\""
   },
   "dependencies": {

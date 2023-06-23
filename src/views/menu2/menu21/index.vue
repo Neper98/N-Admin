@@ -1,7 +1,7 @@
 <template>
-    菜单二/1
-    <input />
+  菜单二/1
+  <input />
 </template>
 <script lang="ts" setup>
-defineOptions({ name: 'menu21'})
+defineOptions({ name: 'Menu21' })
 </script>

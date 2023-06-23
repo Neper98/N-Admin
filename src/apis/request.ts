@@ -53,5 +53,5 @@ export const alovaIns = createAlova({
       }
     }
     return json.data
-  },
+  }
 })
