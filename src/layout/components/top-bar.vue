@@ -7,7 +7,9 @@
     <el-breadcrumb :separator-icon="ArrowRight">
       <transition-group name="breadcrumb" mode="out-in">
         <template v-for="{ meta, path, name } in breadList" :key="path">
-          <el-breadcrumb-item v-if="name">{{ meta.title }}</el-breadcrumb-item>
+          <el-breadcrumb-item v-if="name">
+            {{ meta.title }}
+          </el-breadcrumb-item>
         </template>
       </transition-group>
     </el-breadcrumb>
@@ -25,6 +27,7 @@ const route = useRoute()
 const breadList = computed(() => route.matched)
 const { collapse } = storeToRefs(useGlobalStore())
 
+// 切换侧边栏
 const toggleCollapse = () => {
   collapse.value = !collapse.value
 }
@@ -32,18 +35,19 @@ const toggleCollapse = () => {
 
 <style lang="scss" scoped>
 .topbar {
-  height: 50px;
   display: flex;
   align-items: center;
+  height: 50px;
   background-color: #fff;
   border-bottom: 1px solid #ebeef5;
 }
+
 .topbar__icon--collapse {
-  padding: 0 20px;
-  height: 100%;
-  cursor: pointer;
   display: flex;
   align-items: center;
+  height: 100%;
+  padding: 0 20px;
+  cursor: pointer;
 
   &:hover {
     background-image: linear-gradient(90deg, var(--el-color-primary), transparent);
@@ -53,15 +57,18 @@ const toggleCollapse = () => {
     background-image: linear-gradient(-90deg, var(--el-color-primary), transparent);
   }
 }
+
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
   transition: all 0.3s;
 }
+
 .breadcrumb-enter-from,
 .breadcrumb-leave-active {
   opacity: 0;
   transform: translateX(20px);
 }
+
 .breadcrumb-leave-active {
   position: absolute;
 }

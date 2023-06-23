@@ -4,18 +4,22 @@
       <div ref="tagRef" class="tag-list">
         <router-link
           v-for="tag in viewTags"
+          :key="tag.fullPath"
           :class="{
             tag: true,
             active: isActive(tag),
-            affix: tag.meta.affix,
+            affix: tag.meta.affix
           }"
           :to="tag"
-          :key="tag.fullPath"
           @contextmenu.prevent="openMenu($event, tag)"
         >
-        <el-tag :closable="!tag.meta.affix" @close.prevent="closeTag(tag)" :effect="isActive(tag) ? 'dark' : 'plain'">
-          {{ tag.meta.title }}
-        </el-tag>
+          <el-tag
+            :closable="!tag.meta.affix"
+            :effect="isActive(tag) ? 'dark' : 'plain'"
+            @close.prevent="closeTag(tag)"
+          >
+            {{ tag.meta.title }}
+          </el-tag>
         </router-link>
       </div>
     </el-scrollbar>
@@ -26,21 +30,21 @@
       :style="{
         left: menuOptions.position.left + 'px',
         top: menuOptions.position.top + 'px',
-        position: 'fixed',
+        position: 'fixed'
       }"
     />
     <template #dropdown>
       <el-dropdown-menu class="menu-list">
         <el-dropdown-item><i-ep-refresh class="ii" />刷新</el-dropdown-item>
-        <el-dropdown-item @click="closeTag(currentTag)" divided>
+        <el-dropdown-item divided @click="closeTag(currentTag)">
           <i-ep-close />关闭标签
         </el-dropdown-item>
-        <el-dropdown-item @click="closeOther(currentTag)"
-          ><i-ep-folder-delete />关闭其他标签</el-dropdown-item
-        >
-        <el-dropdown-item @click="fullScreenTag(currentTag)" divided
-          ><i-ep-full-screen />全屏当前标签</el-dropdown-item
-        >
+        <el-dropdown-item @click="closeOther(currentTag)">
+          <i-ep-folder-delete />关闭其他标签
+        </el-dropdown-item>
+        <el-dropdown-item divided @click="fullScreenTag(currentTag)">
+          <i-ep-full-screen />全屏当前标签
+        </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -64,8 +68,8 @@ const menuOptions = reactive({
   visible: false,
   position: {
     left: 0,
-    top: 0,
-  },
+    top: 0
+  }
 })
 const global = useGlobalStore()
 const viewTags = global.viewTags
@@ -79,17 +83,17 @@ onMounted(() => {
     onEnd: (e: any) => {
       const { oldIndex, newIndex } = e
       ;[viewTags[oldIndex], viewTags[newIndex]] = [viewTags[newIndex], viewTags[oldIndex]]
-    },
+    }
   })
 })
 const isActive = (r: RN) => r.fullPath === route.fullPath
 // 右键打开菜单
-const openMenu = (e: MouseEvent , tag: RN) => {
+const openMenu = (e: MouseEvent, tag: RN) => {
   const { clientX: x, clientY: y } = e
   currentTag.value = tag
   menuOptions.position = {
     left: x + 1,
-    top: y + 1,
+    top: y + 1
   }
   nextTick(() => {
     menuRef?.value?.handleOpen()
@@ -121,39 +125,34 @@ const fullScreenTag = (tag: RN) => {
 <style lang="scss" scoped>
 .tag-list {
   display: flex;
+  height: 35px;
   background-color: #fff;
   border-bottom: 1px solid #e6e6e6;
-  height: 35px;
 
   .tag {
-    cursor: pointer;
     display: flex;
-    padding: 0 10px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
     height: 100%;
+    padding: 0 10px;
+    font-size: 12px;
+    line-height: 35px;
     color: #999;
     text-decoration: none;
-    justify-content: center;
-    align-items: center;
-    line-height: 35px;
-    font-size: 12px;
-    flex-shrink: 0;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--el-color-primary-light-9);
     }
   }
-
-  // .active {
-  //   color: #fff;
-  //   background-color: var(--el-color-primary) !important;
-  // }
-
- 
 }
+
 .menu {
-  :deep(.menu-list){
+  :deep(.menu-list) {
     width: 250px;
   }
+
   :deep(svg) {
     margin-right: 10px;
   }

@@ -4,19 +4,19 @@
     <el-sub-menu v-if="hasChildren(navMenu)" :index="navMenu.path">
       <template #title>
         <el-icon>
-          <component class="menu-icon" v-if="navMenu.meta.icon" :is="navMenu.meta.icon" />
+          <component :is="navMenu.meta.icon" v-if="navMenu.meta.icon" class="menu-icon" />
           <i-ep-menu v-else />
         </el-icon>
         <span class="menu-title">{{ navMenu.meta.title }}</span>
       </template>
       <!-- 递归渲染 -->
-      <nav-menu :navMenus="navMenu.children" />
+      <nav-menu :nav-menus="navMenu.children" />
     </el-sub-menu>
 
     <!-- 无子路由 -->
     <el-menu-item v-else :index="navMenu.path">
       <el-icon>
-        <component class="menu-icon" v-if="navMenu.meta.icon" :is="navMenu.meta.icon" />
+        <component :is="navMenu.meta.icon" v-if="navMenu.meta.icon" class="menu-icon" />
         <i-ep-menu v-else />
       </el-icon>
       <span class="menu-title">{{ navMenu.meta.title }}</span>

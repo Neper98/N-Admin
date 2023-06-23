@@ -36,6 +36,6 @@ export const useGlobalStore = defineStore('global', () => {
     collapse,
     viewTags,
     beforeEachTags,
-    resetViewTags,
+    resetViewTags
   }
 })

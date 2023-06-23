@@ -6,5 +6,5 @@
   "printWidth": 100,
   "quoteProps": "consistent",
   "htmlWhitespaceSensitivity": "strict",
-  "trailingComma": "all"
+  "trailingComma": "none"
 }

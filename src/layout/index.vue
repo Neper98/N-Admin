@@ -9,10 +9,10 @@
       </router-link>
       <!-- 顶部右侧 -->
       <div class="container__header--right">
-        <el-icon @click="fs" class="icon-fullScreen"><i-ep-FullScreen /></el-icon>
+        <el-icon class="icon-fullScreen" @click="fs"><i-ep-FullScreen /></el-icon>
         <el-dropdown trigger="click" @command="handler">
           <div>
-            <el-avatar :size="30" class="avatar"></el-avatar>
+            <el-avatar :size="30" class="avatar" />
           </div>
           <template #dropdown>
             <el-dropdown-menu>
@@ -27,7 +27,7 @@
       <!-- 移动端侧边栏 -->
       <div v-if="isMobile">
         <div class="icon-menu" @click="toggleDrawer"><i-ep-Menu /></div>
-        <el-drawer :size="240" v-model="visible" direction="ltr" :with-header="false">
+        <el-drawer v-model="visible" :size="240" direction="ltr" :with-header="false">
           <div class="side--mobile">
             <el-header class="side__header--mobile">
               <img class="logo" :src="logo" />
@@ -41,17 +41,17 @@
                 text-color="#fff"
                 active-text-color="#409EFF"
               >
-                <nav-menu :navMenus="menu" />
+                <nav-menu :nav-menus="menu" />
               </el-menu>
             </el-scrollbar>
           </div>
         </el-drawer>
       </div>
       <!-- PC端侧边栏 -->
-      <el-aside class="container__side" v-else :class="{ collapse }">
+      <el-aside v-else class="container__side" :class="{ collapse }">
         <el-scrollbar>
           <el-menu router :collapse="collapse" :default-active="route.fullPath">
-            <nav-menu :navMenus="menu" />
+            <nav-menu :nav-menus="menu" />
           </el-menu>
         </el-scrollbar>
       </el-aside>
@@ -60,9 +60,9 @@
         <!-- 面包屑 -->
         <top-bar v-if="!isMobile" />
         <!-- 多标签 -->
-        <tags v-if="!isMobile" :contentRef="contentRef" />
+        <tags v-if="!isMobile" :content-ref="contentRef" />
         <!-- 内容部分 -->
-        <div class="contaier__content" ref="contentRef">
+        <div ref="contentRef" class="contaier__content">
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepAliveComponents">
               <component :is="Component" :key="$route.fullPath" />
@@ -93,7 +93,7 @@ const keepAliveComponents = computed(
   () =>
     viewTags.value
       .map((tag) => tag.matched[tag.matched.length - 1].components?.default.name)
-      .filter((i) => !!i) as string[],
+      .filter((i) => !!i) as string[]
 )
 const toggleDrawer = () => {
   visible.value = !visible.value

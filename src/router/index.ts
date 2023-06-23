@@ -9,7 +9,7 @@ import menu22 from '@/views/menu2/menu22/index.vue'
 import home from '@/views/home/index.vue'
 import layout from '@/layout/index.vue'
 import { useGlobalStore } from '@/stores'
-import { Delete} from '@element-plus/icons-vue'
+import { Delete } from '@element-plus/icons-vue'
 
 export const menu = [
   {
@@ -25,24 +25,24 @@ export const menu = [
         name: 'm1m11',
         component: menu11,
         meta: {
-          title: '菜单一/1',
-        },
+          title: '菜单一/1'
+        }
       },
       {
         path: '/m1/m12',
         name: 'm1m12',
         component: menu12,
         meta: {
-          title: '菜单一/2',
-        },
-      },
-    ],
+          title: '菜单一/2'
+        }
+      }
+    ]
   },
   {
     path: '/m2',
     name: 'm2',
     meta: {
-      title: '菜单二',
+      title: '菜单二'
     },
     children: [
       {
@@ -50,49 +50,46 @@ export const menu = [
         name: 'm2m21',
         component: menu21,
         meta: {
-          title: '菜单二/1',
-        },
+          title: '菜单二/1'
+        }
       },
       {
         path: '/m2/m22',
         name: 'm2m22',
         component: menu22,
         meta: {
-          title: '菜单二/2',
-        },
-      },
-    ],
-  },
+          title: '菜单二/2'
+        }
+      }
+    ]
+  }
 ]
 
 export const homeMenu = {
-    path: '/',
-    name: 'home',
-    component: home,
-    meta: {
-      title: '首页',
-      affix: true
-    },
+  path: '/',
+  name: 'home',
+  component: home,
+  meta: {
+    title: '首页',
+    affix: true
+  }
 }
 
 const routes = [
   {
     path: '/',
     component: layout,
-    children: [
-      homeMenu,
-      ...menu
-    ]
+    children: [homeMenu, ...menu]
   },
   {
     path: '/:pathMatch(.*)*',
-    component: Page404,
-  },
+    component: Page404
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes
 })
 
 router.beforeEach((to, from, next) => {
