@@ -6,6 +6,8 @@ import menu11 from '@/views/menu1/menu11/index.vue'
 import menu12 from '@/views/menu1/menu12/index.vue'
 import menu21 from '@/views/menu2/menu21/index.vue'
 import menu22 from '@/views/menu2/menu22/index.vue'
+import login from '@/views/login/index.vue'
+
 import home from '@/views/home/index.vue'
 import layout from '@/layout/index.vue'
 import { useGlobalStore } from '@/stores'
@@ -80,6 +82,11 @@ const routes = [
     path: '/',
     component: layout,
     children: [homeMenu, ...menu]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: login
   },
   {
     path: '/:pathMatch(.*)*',

@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <el-scrollbar>
-      <div ref="tagRef" class="tag-list">
-        <router-link
-          v-for="tag in viewTags"
-          :key="tag.fullPath"
-          :class="{
-            tag: true,
-            active: isActive(tag),
-            affix: tag.meta.affix
-          }"
-          :to="tag"
-          @contextmenu.prevent="openMenu($event, tag)"
+  <el-scrollbar>
+    <div ref="tagRef" class="tag-list">
+      <router-link
+        v-for="tag in viewTags"
+        :key="tag.fullPath"
+        :class="{
+          tag: true,
+          active: isActive(tag),
+          affix: tag.meta.affix
+        }"
+        :to="tag"
+        @contextmenu.prevent="openMenu($event, tag)"
+      >
+        <el-tag
+          :closable="!tag.meta.affix"
+          :effect="isActive(tag) ? 'dark' : 'plain'"
+          @close.prevent="closeTag(tag)"
         >
-          <el-tag
-            :closable="!tag.meta.affix"
-            :effect="isActive(tag) ? 'dark' : 'plain'"
-            @close.prevent="closeTag(tag)"
-          >
-            {{ tag.meta.title }}
-          </el-tag>
-        </router-link>
-      </div>
-    </el-scrollbar>
-  </div>
+          {{ tag.meta.title }}
+        </el-tag>
+      </router-link>
+    </div>
+  </el-scrollbar>
 
   <el-dropdown ref="menuRef" class="menu" :teleported="false">
     <div
@@ -36,13 +34,13 @@
     <template #dropdown>
       <el-dropdown-menu class="menu-list">
         <el-dropdown-item><i-ep-refresh class="ii" />刷新</el-dropdown-item>
-        <el-dropdown-item divided @click="closeTag(currentTag)">
+        <el-dropdown-item divided @click="closeTag(currentTag!)">
           <i-ep-close />关闭标签
         </el-dropdown-item>
-        <el-dropdown-item @click="closeOther(currentTag)">
+        <el-dropdown-item @click="closeOther(currentTag!)">
           <i-ep-folder-delete />关闭其他标签
         </el-dropdown-item>
-        <el-dropdown-item divided @click="fullScreenTag(currentTag)">
+        <el-dropdown-item divided @click="fullScreenTag(currentTag!)">
           <i-ep-full-screen />全屏当前标签
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -62,8 +60,9 @@ import { fullScreen } from '@/utils'
 const props = defineProps(['contentRef'])
 const route = useRoute()
 const router = useRouter()
-const tagRef = ref()
+const tagRef = ref<HTMLElement>()
 const menuRef = ref<DropdownInstance>()
+const currentTag = ref<RN>()
 const menuOptions = reactive({
   visible: false,
   position: {
@@ -73,7 +72,6 @@ const menuOptions = reactive({
 })
 const global = useGlobalStore()
 const viewTags = global.viewTags
-const currentTag = ref()
 
 onMounted(() => {
   Sortable.create(tagRef.value, {

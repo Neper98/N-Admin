@@ -16,13 +16,15 @@ export const useGlobalStore = defineStore('global', () => {
 
   // 更新Tags的滚动状态
   const beforeEachTags = (to: RN, from: ViewTag) => {
-    const route = viewTags.value.find((i) => i.fullPath === from.fullPath)
-    const isexist = viewTags.value.map((i) => i.fullPath).includes(to.fullPath)
+    const fromTag = viewTags.value.find((i) => i.fullPath === from.fullPath)
+    const isExist = viewTags.value.map((i) => i.fullPath).includes(to.fullPath)
+    // TODO:判断当前跳转路由是否需要创建Tag
+    const needCreateTag = (route: RN) => !['home', 'login'].includes(route.name as string)
 
-    if (route) {
-      route.scrollTop = from.scrollTop
+    if (fromTag) {
+      fromTag.scrollTop = from.scrollTop
     }
-    if (!isexist && to.name != 'home') {
+    if (!isExist && needCreateTag(to)) {
       viewTags.value.push(to)
     }
   }
