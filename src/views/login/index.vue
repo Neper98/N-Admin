@@ -59,7 +59,7 @@ const login = async () => {
       router.push('/')
     } else {
       ElNotification.warning({
-        message: Object.values(fields)[0][0].message
+        message: Object.values(fields!)[0][0].message
       })
     }
   })

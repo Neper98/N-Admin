@@ -10,10 +10,12 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
+    "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "lint:format": "prettier --write src/",
     "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
-    "lint:style": "stylelint --fix \"src/**/*.{css,scss,vue}\""
+    "lint:style": "stylelint --fix \"src/**/*.{css,scss,vue}\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@alova/scene-vue": "^1.0.4",
@@ -47,7 +49,7 @@
     "autoprefixer": "^10.4.14",
     "eslint": "^8.42.0",
     "eslint-plugin-vue": "^9.14.1",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "lint-staged": "^13.2.2",
     "npm-run-all": "^4.1.5",
     "postcss-html": "^1.5.0",
