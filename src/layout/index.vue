@@ -40,6 +40,7 @@
                 background-color="#212d3d"
                 text-color="#fff"
                 active-text-color="#409EFF"
+                unique-opened
               >
                 <nav-menu :nav-menus="menu" />
               </el-menu>
@@ -50,7 +51,7 @@
       <!-- PC端侧边栏 -->
       <el-aside v-else class="container__side" :class="{ collapse }">
         <el-scrollbar>
-          <el-menu router :collapse="collapse" :default-active="route.fullPath">
+          <el-menu router :collapse="collapse" :default-active="route.fullPath" unique-opened>
             <nav-menu :nav-menus="menu" />
           </el-menu>
         </el-scrollbar>
@@ -62,10 +63,13 @@
         <!-- 多标签 -->
         <tags v-if="true" :content-ref="contentRef" />
         <!-- 内容部分 -->
+
         <div ref="contentRef" class="contaier__content">
-          <router-view v-slot="{ Component }">
+          <router-view v-slot="{ Component, route }">
             <keep-alive :include="keepAliveComponents">
-              <component :is="Component" v-if="!isRefreshing" :key="$route.fullPath" />
+              <Transition name="fade" mode="out-in">
+                <component :is="Component" v-if="!isRefreshing" :key="route.path" />
+              </Transition>
             </keep-alive>
           </router-view>
         </div>

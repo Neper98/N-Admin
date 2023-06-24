@@ -17,7 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--el-color-primary);
+    background-color: #07161f;
 
     .container_header--left {
       display: flex;
@@ -119,4 +119,24 @@
       border-bottom: 1px dotted #f4f5f529;
     }
   }
+}
+
+/* 渐变设置 */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(10px, 2px);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+.fade-enter-active {
+  transition: all 0.3s ease;
+}
+
+.fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.6, 0.6, 1);
 }

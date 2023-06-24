@@ -1,7 +1,9 @@
 <template>
-  菜单一/1
-  <input type="text" />
-  <div class="box" />
+  <div>
+    菜单一/1
+    <input type="text" />
+    <div class="box" />
+  </div>
 </template>
 <script lang="ts" setup>
 defineOptions({ name: 'Menu11' })

@@ -1,2 +1,4 @@
-<template> 主页 </template>
+<template>
+  <div>主页</div>
+</template>
 <script lang="ts" setup></script>
