@@ -23,7 +23,7 @@
     </div>
   </el-scrollbar>
 
-  <el-dropdown ref="menuRef" class="menu" :teleported="false">
+  <el-dropdown ref="menuRef" class="menu" :teleported="false" trigger="contextmenu">
     <div
       :style="{
         left: menuOptions.position.left + 'px',
