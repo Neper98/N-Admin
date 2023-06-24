@@ -17,6 +17,7 @@
           :rules="rules"
           :show-message="false"
           hide-required-asterisk
+          @keyup.enter="login"
         >
           <el-form-item label="用户名" prop="username">
             <el-input v-model="form.username" />
@@ -36,13 +37,14 @@ import logo from '@/assets/logo.png'
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useRouter } from 'vue-router'
+import { ElNotification } from 'element-plus'
 
 const router = useRouter()
 const formRef = ref<FormInstance>()
-const rules = reactive<FormRules>({
+const rules: FormRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-})
+}
 const form = reactive({
   username: '',
   password: ''
@@ -56,7 +58,9 @@ const login = async () => {
       console.log('submit!')
       router.push('/')
     } else {
-      console.log('error submit!', fields)
+      ElNotification.warning({
+        message: Object.values(fields)[0][0].message
+      })
     }
   })
 }

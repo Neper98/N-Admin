@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar>
+  <el-scrollbar class="tag-scroll">
     <div ref="tagRef" class="tag-list">
       <router-link
         v-for="tag in viewTags"
@@ -33,7 +33,7 @@
     />
     <template #dropdown>
       <el-dropdown-menu class="menu-list">
-        <el-dropdown-item><i-ep-refresh class="ii" />刷新</el-dropdown-item>
+        <el-dropdown-item @click="refresh(currentTag!)"><i-ep-refresh />刷新</el-dropdown-item>
         <el-dropdown-item divided @click="closeTag(currentTag!)">
           <i-ep-close />关闭标签
         </el-dropdown-item>
@@ -52,8 +52,7 @@
 import Sortable from 'sortablejs'
 import { useRoute, useRouter } from 'vue-router'
 import { ref, reactive, onMounted, nextTick } from 'vue'
-import { useGlobalStore } from '@/stores'
-import type { RouteLocationNormalizedLoaded as RN } from 'vue-router'
+import { type ViewTag, useGlobalStore } from '@/stores'
 import { type DropdownInstance, ElScrollbar } from 'element-plus'
 import { fullScreen } from '@/utils'
 
@@ -62,7 +61,7 @@ const route = useRoute()
 const router = useRouter()
 const tagRef = ref<HTMLElement>()
 const menuRef = ref<DropdownInstance>()
-const currentTag = ref<RN>()
+const currentTag = ref<ViewTag>()
 const menuOptions = reactive({
   visible: false,
   position: {
@@ -84,21 +83,29 @@ onMounted(() => {
     }
   })
 })
-const isActive = (r: RN) => r.fullPath === route.fullPath
+const isActive = (r: ViewTag) => r.fullPath === route.fullPath
 // 右键打开菜单
-const openMenu = (e: MouseEvent, tag: RN) => {
+const openMenu = (e: MouseEvent, tag: ViewTag) => {
   const { clientX: x, clientY: y } = e
   currentTag.value = tag
   menuOptions.position = {
-    left: x + 1,
+    left: x + 100,
     top: y + 1
   }
   nextTick(() => {
     menuRef?.value?.handleOpen()
   })
 }
+// 刷新标签
+const refresh = (tag: ViewTag) => {
+  tag.isRefreshing = global.isRefreshing = true
+  nextTick(() => {
+    tag.isRefreshing = global.isRefreshing = false
+    isActive(tag) ? router.replace(tag) : router.push(tag)
+  })
+}
 // 关闭某个标签
-const closeTag = (tag: RN) => {
+const closeTag = (tag: ViewTag) => {
   const i = viewTags.findIndex((item) => item === tag)
   if (isActive(tag)) {
     const isLast = i === viewTags.length - 1
@@ -108,19 +115,23 @@ const closeTag = (tag: RN) => {
   viewTags.splice(i, 1)
 }
 // 关闭其他标签
-const closeOther = (tag: RN) => {
+const closeOther = (tag: ViewTag) => {
   global.resetViewTags()
   route.name !== 'home' && viewTags.push(tag)
   !isActive(tag) && router.push(tag)
 }
 // 全屏标签页
-const fullScreenTag = (tag: RN) => {
+const fullScreenTag = (tag: ViewTag) => {
   !isActive(tag) && router.push(tag)
   fullScreen(props.contentRef)
 }
 </script>
 
 <style lang="scss" scoped>
+.tag-scroll {
+  height: auto;
+}
+
 .tag-list {
   display: flex;
   height: 35px;
@@ -139,6 +150,7 @@ const fullScreenTag = (tag: RN) => {
     color: #999;
     text-decoration: none;
     cursor: pointer;
+    border-right: 1px solid #e6e6e6;
 
     &:hover {
       background-color: var(--el-color-primary-light-9);
@@ -148,11 +160,15 @@ const fullScreenTag = (tag: RN) => {
 
 .menu {
   :deep(.menu-list) {
-    width: 250px;
+    width: 200px;
   }
 
   :deep(svg) {
     margin-right: 10px;
+  }
+
+  :deep(.el-dropdown__popper.el-popper .el-popper__arrow::before) {
+    display: none;
   }
 }
 </style>

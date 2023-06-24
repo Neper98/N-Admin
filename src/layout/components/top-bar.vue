@@ -50,11 +50,11 @@ const toggleCollapse = () => {
   cursor: pointer;
 
   &:hover {
-    background-image: linear-gradient(90deg, var(--el-color-primary), transparent);
+    background-image: linear-gradient(90deg, var(--el-color-primary-light-9), transparent);
   }
 
   &.collapse:hover {
-    background-image: linear-gradient(-90deg, var(--el-color-primary), transparent);
+    background-image: linear-gradient(-90deg, var(--el-color-primary-light-9), transparent);
   }
 }
 

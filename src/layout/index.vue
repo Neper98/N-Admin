@@ -22,7 +22,7 @@
         </el-dropdown>
       </div>
     </el-header>
-    <el-container>
+    <el-container class="container__bottom-box">
       <!-- 侧边菜单 -->
       <!-- 移动端侧边栏 -->
       <div v-if="isMobile">
@@ -60,12 +60,12 @@
         <!-- 面包屑 -->
         <top-bar v-if="!isMobile" />
         <!-- 多标签 -->
-        <tags v-if="!isMobile" :content-ref="contentRef" />
+        <tags v-if="true" :content-ref="contentRef" />
         <!-- 内容部分 -->
         <div ref="contentRef" class="contaier__content">
           <router-view v-slot="{ Component }">
             <keep-alive :include="keepAliveComponents">
-              <component :is="Component" :key="$route.fullPath" />
+              <component :is="Component" v-if="!isRefreshing" :key="$route.fullPath" />
             </keep-alive>
           </router-view>
         </div>
@@ -86,14 +86,16 @@ import { ref, computed } from 'vue'
 import { fullScreen } from '@/utils'
 const route = useRoute()
 const contentRef = ref()
-const { isMobile, collapse, viewTags } = storeToRefs(useGlobalStore())
+const { isMobile, collapse, viewTags, isRefreshing } = storeToRefs(useGlobalStore())
 const visible = ref<boolean>(false)
 
 const keepAliveComponents = computed(
   () =>
     viewTags.value
-      .map((tag) => tag.matched[tag.matched.length - 1].components?.default.name)
-      .filter((i) => !!i) as string[]
+      .filter(
+        (tag) => tag.matched[tag.matched.length - 1].components?.default.name && !tag.isRefreshing
+      )
+      .map((tag) => tag.matched[tag.matched.length - 1].components?.default.name) as string[]
 )
 const toggleDrawer = () => {
   visible.value = !visible.value

@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh;
+  height: 100%;
 
   .title-name {
     font-size: 20px;
@@ -52,6 +52,10 @@
     transition: width 0.3s;
   }
 
+  .container__bottom-box {
+    overflow-y: auto;
+  }
+
   :deep(.el-menu) {
     border: none !important;
   }
@@ -73,10 +77,9 @@
   .contaier__content {
     flex: 1;
     padding: 10px;
-    margin: 10px;
-    overflow: auto;
+    overflow-y: auto;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 5px;
   }
 
   :deep(.el-drawer__body) {
