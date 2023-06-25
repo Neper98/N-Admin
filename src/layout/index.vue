@@ -67,7 +67,7 @@
         <div ref="contentRef" class="contaier__content">
           <router-view v-slot="{ Component, route: $route }">
             <keep-alive :include="keepAliveComponents">
-              <Transition name="fade" mode="out-in">
+              <Transition name="fade" mode="out-in" @after-enter="afterEnter">
                 <component :is="Component" v-if="!isRefreshing" :key="$route.path" />
               </Transition>
             </keep-alive>
@@ -86,7 +86,7 @@ import { useGlobalStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { menu } from '@/router'
 import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { fullScreen } from '@/utils'
 const route = useRoute()
 const contentRef = ref()
@@ -109,6 +109,13 @@ const fs = () => {
 }
 const handler = (type: any) => {
   console.log(type)
+}
+const afterEnter = () => {
+  // 恢复滚动条位置
+  const toRoute = viewTags.value.find((i) => i.fullPath === route.fullPath)
+  nextTick(() => {
+    contentRef.value?.scrollTo({ top: toRoute?.scrollTop || 0, behavior: 'smooth' })
+  })
 }
 </script>
 <style src="./style.scss" scoped />

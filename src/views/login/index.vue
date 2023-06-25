@@ -2,11 +2,10 @@
   <div class="login-bg">
     <div class="login__box">
       <div class="login__box--left">
-        <el-avatar :src="avatar" :size="80" />
+        <el-avatar :src="logo" :size="80" />
       </div>
       <div class="login__box--right">
         <div class="title">
-          <img :src="logo" class="logo" />
           <span>N-Admin</span>
         </div>
         <el-form
@@ -23,7 +22,7 @@
             <el-input v-model="form.username" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="form.password" type="password" autocomplete="off" />
+            <el-input v-model="form.password" type="password" autocomplete="off" show-password />
           </el-form-item>
         </el-form>
         <el-button class="login__btn" @click="login">登录</el-button>
@@ -32,7 +31,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import avatar from '@/assets/avatar.png'
 import logo from '@/assets/logo.png'
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
@@ -107,11 +105,6 @@ const login = async () => {
       height: 100%;
       padding: 0 10%;
 
-      .logo {
-        width: 40px;
-        margin-right: 10px;
-      }
-
       &::before {
         position: absolute;
         z-index: 0;
@@ -120,7 +113,7 @@ const login = async () => {
         height: 100%;
         content: '';
         filter: blur(5px);
-        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 50%);
+        box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 30%);
       }
 
       .title {
@@ -140,10 +133,6 @@ const login = async () => {
           width: 100%;
         }
 
-        .el-input input:focus ~ .el-input::after {
-          transform: scale(1, 1);
-        }
-
         .el-form-item {
           margin-bottom: 20px;
         }
@@ -152,14 +141,24 @@ const login = async () => {
           margin-bottom: 0;
         }
 
-        .is-focus::after {
-          transform: scale(1, 1) !important;
+        .el-form-item__content {
+          &::after {
+            width: 100%;
+            height: 2px;
+            content: '';
+            background-color: #fff;
+            transition: 0.3s ease;
+            transform: scale(0, 1);
+          }
+
+          &:has(.is-focus)::after {
+            transform: scale(1, 1) !important;
+          }
         }
 
         .el-input__wrapper {
           position: relative;
           display: flex;
-          flex-direction: column;
           height: 40px;
           padding: 0;
           background-color: transparent;
@@ -168,15 +167,6 @@ const login = async () => {
 
           // 底部生成一个阴影
           box-shadow: inset 0 -1px 0 0 rgba(255, 255, 255, 10%);
-
-          &::after {
-            width: 100%;
-            height: 2px;
-            content: '';
-            background-color: #fff;
-            transition: 0.2s ease;
-            transform: scale(0, 1);
-          }
         }
       }
     }
@@ -186,7 +176,7 @@ const login = async () => {
       width: 100%;
       height: 40px;
       color: #fff;
-      background-color: #00897b;
+      background-color: #015099;
       border: none;
     }
   }

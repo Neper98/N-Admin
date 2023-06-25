@@ -12,7 +12,6 @@ import home from '@/views/home/index.vue'
 import layout from '@/layout/index.vue'
 import { useGlobalStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
-import { nextTick } from 'vue'
 
 // 左侧菜单路由
 export const menu: RRR[] = [
@@ -111,15 +110,8 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
-router.afterEach((to) => {
+router.afterEach(() => {
   nprogress.done()
-  const global = useGlobalStore()
-  // 恢复滚动条位置
-  const toRoute = global.viewTags.find((i) => i.fullPath === to.fullPath)
-  const contentRef = document.querySelector('.contaier__content')
-  nextTick(() => {
-    contentRef?.scrollTo({ top: toRoute?.scrollTop || 0, behavior: 'smooth' })
-  })
 })
 
 router.onError(() => {
