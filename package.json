@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
@@ -55,6 +56,7 @@
     "postcss-html": "^1.5.0",
     "postcss-scss": "^4.0.6",
     "prettier": "^2.8.8",
+    "push-dir": "^0.4.1",
     "rimraf": "^5.0.1",
     "rollup-plugin-bundle-analyzer": "^1.6.6",
     "sass": "^1.63.2",
