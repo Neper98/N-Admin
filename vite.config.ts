@@ -12,7 +12,7 @@ import IconsResolver from 'unplugin-icons/resolver'
 const pathSrc = path.resolve(__dirname, 'src')
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: './N-Admin',
+  base: './',
   plugins: [
     vue(),
     vueJsx(),
