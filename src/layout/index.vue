@@ -65,10 +65,10 @@
         <!-- 内容部分 -->
 
         <div ref="contentRef" class="contaier__content">
-          <router-view v-slot="{ Component, route }">
+          <router-view v-slot="{ Component, route: $route }">
             <keep-alive :include="keepAliveComponents">
               <Transition name="fade" mode="out-in">
-                <component :is="Component" v-if="!isRefreshing" :key="route.path" />
+                <component :is="Component" v-if="!isRefreshing" :key="$route.path" />
               </Transition>
             </keep-alive>
           </router-view>
@@ -107,7 +107,6 @@ const toggleDrawer = () => {
 const fs = () => {
   fullScreen(document.documentElement)
 }
-
 const handler = (type: any) => {
   console.log(type)
 }

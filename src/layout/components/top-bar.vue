@@ -5,7 +5,7 @@
       <i-ep-Fold v-else />
     </div>
     <el-breadcrumb :separator-icon="ArrowRight">
-      <transition-group name="breadcrumb" mode="out-in">
+      <transition-group name="breadcrumb">
         <template v-for="{ meta, path, name } in breadList" :key="path">
           <el-breadcrumb-item v-if="name">
             {{ meta.title }}

@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw as RRR } from 'vue-router'
 import nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 import Page404 from '@/views/404/index.vue'
@@ -14,7 +14,8 @@ import { useGlobalStore } from '@/stores'
 import { Delete } from '@element-plus/icons-vue'
 import { nextTick } from 'vue'
 
-export const menu = [
+// 左侧菜单路由
+export const menu: RRR[] = [
   {
     path: '/m1',
     name: 'm1',
@@ -68,7 +69,8 @@ export const menu = [
   }
 ]
 
-export const homeMenu = {
+// 首页路由
+export const homeMenu: RRR = {
   path: '/',
   name: 'home',
   component: home,
@@ -78,7 +80,8 @@ export const homeMenu = {
   }
 }
 
-const routes = [
+// 全部路由表
+const routes: RRR[] = [
   {
     path: '/',
     component: layout,
@@ -111,7 +114,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   nprogress.done()
   const global = useGlobalStore()
-
   // 恢复滚动条位置
   const toRoute = global.viewTags.find((i) => i.fullPath === to.fullPath)
   const contentRef = document.querySelector('.contaier__content')

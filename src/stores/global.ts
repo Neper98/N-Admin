@@ -16,7 +16,7 @@ export const useGlobalStore = defineStore('global', () => {
   const viewTags = ref<ViewTag[]>([home])
   const isRefreshing = ref<boolean>(false)
 
-  // 更新Tags的滚动状态
+  // 进入新页面增添加标签页
   const beforeEachTags = (to: RN, from: RN) => {
     const fromTag = viewTags.value.find((i) => i.fullPath === from.fullPath)
     const isExist = viewTags.value.map((i) => i.fullPath).includes(to.fullPath)
@@ -33,6 +33,7 @@ export const useGlobalStore = defineStore('global', () => {
     }
   }
 
+  // 重置标签页
   const resetViewTags = () => {
     viewTags.value.splice(0, viewTags.value.length, home)
   }
